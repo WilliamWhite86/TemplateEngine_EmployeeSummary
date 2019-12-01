@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+let employee;
 
 function promptUser() {
     return inquirer.prompt([
@@ -25,5 +26,18 @@ function promptUser() {
       }
     ]);
   }
+  promptUser().then (function(value){
+  console.log(value)
+  if(value.title === "Intern"){
+    promptIntern();
+  }})
   
-  promptUser()
+  function promptIntern() {
+      return inquirer.prompt([
+        {
+          type:"input",
+          name:"school",
+          message:"what is your school?"
+        } 
+      ])
+    };
