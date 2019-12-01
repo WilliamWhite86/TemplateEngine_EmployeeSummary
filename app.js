@@ -4,13 +4,18 @@ function promptUser() {
     return inquirer.prompt([
       {
         type: "input",
-        name: "email",
-        message: "What is your email?"
+        name: "name",
+        message: "What is your name?"
       },
       {
         type: "input",
         name: "id",
         message: "What is your id?",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is your email?"
       },
       {
        type: "list",
