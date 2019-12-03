@@ -21,20 +21,19 @@ function promptUser() {
       },
       {
        type: "list",
-       name: "title",
+       name: "role",
        message: "What is your role?",
        choices: ["Manager","Engineer","Intern"]   
       }
     ]);
   }
   promptUser().then (function(value){
-  const e = new Employee(value.name,value.id,value.email,value.title)
+  const e = new Employee(value.name,value.id,value.email,value.role)
   console.log(e);
-  if(value.title === "Intern"){
+  if(value.role === "Intern"){
     promptIntern().then(function(value){
       console.log(value)
-      console.log(getName)
-      const i = new Intern()
+      const i = new Intern(e.name,e.id,e.email,e.role, value.school)
       console.log(i);
     })
   }})
