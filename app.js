@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
-let employee;
+const Employee = require("../TemplateEngine_EmployeeSummary/lib/Employee");
+const Intern = require("../TemplateEngine_EmployeeSummary/lib/Intern");
 
 function promptUser() {
     return inquirer.prompt([
@@ -27,10 +28,20 @@ function promptUser() {
     ]);
   }
   promptUser().then (function(value){
-  console.log(value)
+  const e = new Employee(value.name,value.id,value.email,value.title)
+  console.log(e);
   if(value.title === "Intern"){
-    promptIntern();
+    promptIntern().then(function(value){
+      console.log(value)
+      console.log(getName)
+      const i = new Intern()
+      console.log(i);
+    })
   }})
+  .catch(function(err) {
+    console.log(err)
+  })
+
   
   function promptIntern() {
       return inquirer.prompt([
