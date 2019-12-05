@@ -44,6 +44,11 @@ promptUser().then(function (value) {
       let m = new Manager(e.name,e.id,e.id,value.officeNumber)
     })
   }
+  else{
+    promptEngineer().then(function (value){
+      let en = new Engineer(e.name,e.id,e.id,value.github)
+    })
+  }
 })
   .catch(function (err) {
     console.log(err)
@@ -69,3 +74,13 @@ function promptManager() {
     }
   ])
 };
+
+function promptEngineer(){
+  return inquirer.prompt([
+    {
+      type:"input",
+      name: "gihub",
+      message: "what is your github?"
+    }
+  ])
+}
