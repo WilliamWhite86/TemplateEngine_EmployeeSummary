@@ -23,7 +23,7 @@ function promptUser() {
        type: "list",
        name: "role",
        message: "What is your role?",
-       choices: ["Manager","Engineer","Intern"]   
+       choices: ["Employee","Manager","Engineer","Intern"],
       }
     ]);
   }
