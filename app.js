@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const Employee = require("../TemplateEngine_EmployeeSummary/lib/Employee");
 const Intern = require("../TemplateEngine_EmployeeSummary/lib/Intern");
+const Manager = require("../TemplateEngine_EmployeeSummary/lib/Manager");
+const Engineer = require("../TemplateEngine_EmployeeSummary/lib/Engineer");
 
 function promptUser() {
   return inquirer.prompt([
@@ -33,8 +35,13 @@ promptUser().then(function (value) {
   if (value.role === "Intern") {
     promptIntern().then(function (value) {
       //console.log(value)
-      let i = new Intern(e.name,e.id,e.email, value.school)
+      let i = new Intern(e.name,e.id,e.email,value.school)
       console.log(i);
+    })
+  }
+  else if (value.role === "Manager"){
+    promptManager().then(function (value){
+      let m = new Manager(e.name,e.id,e.id,value.officeNumber)
     })
   }
 })
@@ -49,6 +56,16 @@ function promptIntern() {
       type: "input",
       name: "school",
       message: "what is your school?"
+    }
+  ])
+};
+
+function promptManager() {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "officeNumber",
+      message: "what is your office?"
     }
   ])
 };
