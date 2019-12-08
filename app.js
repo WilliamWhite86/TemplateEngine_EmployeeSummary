@@ -1,10 +1,16 @@
 const inquirer = require("inquirer")
+const util = require("util")
+const fs = require("fs")
+const writeFileAsync = util.promisify(fs.writeFile)
 const Employee = require("../TemplateEngine_EmployeeSummary/lib/Employee")
 const Intern = require("../TemplateEngine_EmployeeSummary/lib/Intern")
 const Manager = require("../TemplateEngine_EmployeeSummary/lib/Manager")
 const Engineer = require("../TemplateEngine_EmployeeSummary/lib/Engineer")
 const employeeList = []
-
+const generateManagerHTML = require("../TemplateEngine_EmployeeSummary/templates/manager")
+const generateInternHTML = require("../TemplateEngine_EmployeeSummary/templates/intern")
+const generateEngineerHTML = require("../TemplateEngine_EmployeeSummary/templates/engineer")
+const generateMainHTML = require("../TemplateEngine_EmployeeSummary/templates/main")
 // promptManager().then(function (value) {
 //   let m = new Manager(value.name, value.id, value.email, value.officeNumber)
 //   console.log(m)
@@ -20,13 +26,16 @@ function createEmployee() {
     let e = new Employee(value.name, value.id, value.email)
     console.log(e)
     if (value.role === "Manager") {
-      promptManager().then(function (value){
+      promptManager().then(function (value) {
         let m = new Manager(e.name, e.id, e.email, value.officeNumber)
         console.log(m)
         employeeList.push(m)
         console.log(employeeList)
-        if(value.anotherEmployee === true){
+        if (value.anotherEmployee === true) {
           createEmployee()
+        }
+        else {
+          generateHTMLbyRole()
         }
       })
     }
@@ -39,6 +48,9 @@ function createEmployee() {
         if (value.anotherEmployee === true) {
           createEmployee()
         }
+        else {
+          generateHTMLbyRole()
+        }
       })
     }
     else {
@@ -49,6 +61,9 @@ function createEmployee() {
         console.log(employeeList)
         if (value.anotherEmployee === true) {
           createEmployee()
+        }
+        else{
+          generateHTMLbyRole()
         }
       })
     }
@@ -77,7 +92,7 @@ function promptUser() {
       type: "list",
       name: "role",
       message: "What role are we adding?",
-      choices: ["Manager","Engineer", "Intern"]
+      choices: ["Manager", "Engineer", "Intern"]
     }
   ])
 }
@@ -99,22 +114,6 @@ function promptIntern() {
 
 function promptManager() {
   return inquirer.prompt([
-    // {
-    //   type: "input",
-    //   name: "name",
-    //   message: "What is your name?"
-    // },
-    // {
-    //   type: "input",
-    //   name: "id",
-    //   message: "What is your id?",
-    // },
-    // {
-    //   type: "input",
-    //   name: "email",
-    //   message: "What is your email?",
-    //   validate: value => value.includes("@") && value.includes(".com") ? true : 'email invalid'
-    // },
     {
       type: "input",
       name: "officeNumber",
@@ -141,4 +140,23 @@ function promptEngineer() {
       message: "Would you like to add another employee?"
     }
   ])
+}
+
+function generateHTMLbyRole() {
+  let employees = ''
+  employeeList.forEach(function (employee) {
+    console.log(employee.name)
+    if (employee.officeNumber) {
+      employees += generateManagerHTML(employee)
+    }
+    else if (employee.school) {
+      employees += generateInternHTML(employee)
+    }
+    else {
+      emloyees += generateEngineerHTML(employee)
+    }
+    console.log(employees)
+    let finalHTML = generateMainHTML(employees)
+    return writeFileAsync("index.html", finalHTML)
+  })
 }
