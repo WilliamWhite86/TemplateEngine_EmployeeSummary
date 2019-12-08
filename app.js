@@ -24,13 +24,10 @@ createEmployee()
 function createEmployee() {
   promptUser().then(function (value) {
     let e = new Employee(value.name, value.id, value.email)
-    console.log(e)
     if (value.role === "Manager") {
       promptManager().then(function (value) {
         let m = new Manager(e.name, e.id, e.email, value.officeNumber)
-        console.log(m)
         employeeList.push(m)
-        console.log(employeeList)
         if (value.anotherEmployee === true) {
           createEmployee()
         }
@@ -42,9 +39,7 @@ function createEmployee() {
     else if (value.role === "Intern") {
       promptIntern().then(function (value) {
         let i = new Intern(e.name, e.id, e.email, value.school)
-        console.log(i)
         employeeList.push(i)
-        console.log(employeeList)
         if (value.anotherEmployee === true) {
           createEmployee()
         }
@@ -56,9 +51,7 @@ function createEmployee() {
     else {
       promptEngineer().then(function (value) {
         let en = new Engineer(e.name, e.id, e.email, value.gihub)
-        console.log(en)
         employeeList.push(en)
-        console.log(employeeList)
         if (value.anotherEmployee === true) {
           createEmployee()
         }
@@ -145,7 +138,6 @@ function promptEngineer() {
 function generateHTMLbyRole() {
   let employees = ''
   employeeList.forEach(function (employee) {
-    console.log(employee.name)
     if (employee.officeNumber) {
       employees += generateManagerHTML(employee)
     }
@@ -153,10 +145,12 @@ function generateHTMLbyRole() {
       employees += generateInternHTML(employee)
     }
     else {
-      emloyees += generateEngineerHTML(employee)
+      employees += generateEngineerHTML(employee)
     }
-    console.log(employees)
+
+  })    
+    //console.log(employees)
     let finalHTML = generateMainHTML(employees)
+    //console.log(finalHTML)
     return writeFileAsync("index.html", finalHTML)
-  })
 }
