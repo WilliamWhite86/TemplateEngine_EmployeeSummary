@@ -4,37 +4,38 @@ const Intern = require("../TemplateEngine_EmployeeSummary/lib/Intern");
 const Manager = require("../TemplateEngine_EmployeeSummary/lib/Manager");
 const Engineer = require("../TemplateEngine_EmployeeSummary/lib/Engineer");
 
-promptManager().then(function(value){
+promptManager().then(function (value) {
   let m = new Manager(value.name, value.id, value.email, value.officeNumber)
   console.log(m)
-  if (value.firstEmployee === true){
+  if (value.firstEmployee === true) {
     createAnotherEmployee()
   }
 })
 
-function createAnotherEmployee(){
-promptUser().then(function(value){
-  let e = new Employee(value.name, value.id, value.email)
-  console.log(e)
-  if(value.role === "Intern"){
-    promptIntern().then(function(value){
-      let i = new Intern(e.name, e.id, e.email, value.school)
-      console.log(i)
-      if(value.anotherEmployee === true){
-        createAnotherEmployee()
-      }
-    })
-  }
-  else{
-    promptEngineer().then(function(value){
-      let en = new Engineer(e.name, e.id, e.email, value.gihub)
-      console.log(en)
-      if(value.anotherEmployee === true){
-        createAnotherEmployee()
-      }
-    })
-  }
-})}
+function createAnotherEmployee() {
+  promptUser().then(function (value) {
+    let e = new Employee(value.name, value.id, value.email)
+    console.log(e)
+    if (value.role === "Intern") {
+      promptIntern().then(function (value) {
+        let i = new Intern(e.name, e.id, e.email, value.school)
+        console.log(i)
+        if (value.anotherEmployee === true) {
+          createAnotherEmployee()
+        }
+      })
+    }
+    else {
+      promptEngineer().then(function (value) {
+        let en = new Engineer(e.name, e.id, e.email, value.gihub)
+        console.log(en)
+        if (value.anotherEmployee === true) {
+          createAnotherEmployee()
+        }
+      })
+    }
+  })
+}
 
 function promptUser() {
   return inquirer.prompt([
@@ -51,7 +52,8 @@ function promptUser() {
     {
       type: "input",
       name: "email",
-      message: "What is your email?"
+      message: "What is your email?",
+      validate: value => value.includes("@") && value.includes(".com") ? true : 'email invalid'
     },
     {
       type: "list",
@@ -92,7 +94,8 @@ function promptManager() {
     {
       type: "input",
       name: "email",
-      message: "What is your email?"
+      message: "What is your email?",
+      validate: value => value.includes("@") && value.includes(".com") ? true : 'email invalid'
     },
     {
       type: "input",
@@ -107,10 +110,10 @@ function promptManager() {
   ])
 }
 
-function promptEngineer(){
+function promptEngineer() {
   return inquirer.prompt([
     {
-      type:"input",
+      type: "input",
       name: "gihub",
       message: "what is your github?"
     },
