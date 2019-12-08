@@ -36,9 +36,6 @@ function createEmployee() {
           generateHTMLbyRole()
         }
       })
-      .then(function(){
-        open('index.html')
-      })
     }
     else if (value.role === "Intern") {
       promptIntern().then(function (value) {
@@ -155,4 +152,7 @@ function generateHTMLbyRole() {
   })    
     let finalHTML = generateMainHTML(employees)
     return writeFileAsync("index.html", finalHTML)
-}
+    .then(function(){
+      open('index.html')
+  })
+}      
