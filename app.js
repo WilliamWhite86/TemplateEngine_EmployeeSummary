@@ -2,6 +2,7 @@ const inquirer = require("inquirer")
 const util = require("util")
 const fs = require("fs")
 const writeFileAsync = util.promisify(fs.writeFile)
+const open = require("open")
 const Employee = require("../TemplateEngine_EmployeeSummary/lib/Employee")
 const Intern = require("../TemplateEngine_EmployeeSummary/lib/Intern")
 const Manager = require("../TemplateEngine_EmployeeSummary/lib/Manager")
@@ -34,6 +35,9 @@ function createEmployee() {
         else {
           generateHTMLbyRole()
         }
+      })
+      .then(function(){
+        open('index.html')
       })
     }
     else if (value.role === "Intern") {
@@ -149,8 +153,6 @@ function generateHTMLbyRole() {
     }
 
   })    
-    //console.log(employees)
     let finalHTML = generateMainHTML(employees)
-    //console.log(finalHTML)
     return writeFileAsync("index.html", finalHTML)
 }
