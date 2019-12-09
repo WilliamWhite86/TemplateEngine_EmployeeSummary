@@ -12,13 +12,6 @@ const generateManagerHTML = require("../TemplateEngine_EmployeeSummary/templates
 const generateInternHTML = require("../TemplateEngine_EmployeeSummary/templates/intern")
 const generateEngineerHTML = require("../TemplateEngine_EmployeeSummary/templates/engineer")
 const generateMainHTML = require("../TemplateEngine_EmployeeSummary/templates/main")
-// promptManager().then(function (value) {
-//   let m = new Manager(value.name, value.id, value.email, value.officeNumber)
-//   console.log(m)
-//   if (value.firstEmployee === true) {
-//     createEmployee()
-//   }
-// })
 
 createEmployee()
 

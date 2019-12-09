@@ -1,5 +1,5 @@
 function generateEngineerHTML(data) {
-    return `<div class="card" style="width: 18rem;">
+    return `<div class="card" style="width: 25%">
         <div class="card-header"><h1>${data.name}</h1></div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><h2>Engineer</h2></li>
